@@ -5,8 +5,18 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
-//both this and the previous draft skip over the second Queue when run, i've yet to try solving this issue
-//it will correctly run Q1 though
+
+//this draft runs SJF and RR correctly and consistently, Check wether non preemptive SJF rule works if Q1 is populated
+
+/*
+Refrences used:
+
+[1] R. Fadatare, “Java sort array objects using comparable interface,” 
+Java Guides, https://www.javaguides.net/2020/04/java-sort-array-objects-using-comparable-interface.html
+[2] GfG, “Round Robin scheduling with different arrival times,” GeeksforGeeks,
+ https://www.geeksforgeeks.org/round-robin-scheduling-with-different-arrival-times/ 
+
+*/
 
 public class SJFTest {
 //initialization
