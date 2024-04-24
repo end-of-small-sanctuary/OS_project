@@ -129,7 +129,7 @@ do {
             done = true;      
       
 //Q1 algorithm
-if (Q1 != null)
+if (Q1 != null) // add arrival time check, itll start process regardless of arrival time now
 for (int j = 0; j < Q1.length; j++) {
     if (Q1[j] == null)
         continue;
