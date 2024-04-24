@@ -1,7 +1,7 @@
-class PCB {
+public class PCB implements Comparable<PCB> {
     String processID;
     int priority;
-    int arrivalTime;
+    int arrivalTime=0;
     int cpuBurst;
     int startTime;
     int terminationTime;
@@ -21,4 +21,20 @@ class PCB {
         this.waitingTime = 0;
         this.responseTime = 0;
     }
-}
+    public void printData(){
+    System.out.print("\n"+this.processID+"\n"+this.priority);
+    }
+    public int getArrivalTime(){
+        return arrivalTime;
+    }
+
+    @Override
+    public int compareTo(PCB o){
+    
+    int value1 = this.getArrivalTime() - o.getArrivalTime();
+        if (value1 == 0) 
+            return this.cpuBurst - o.cpuBurst;
+           return value1;
+    }
+    }
+
