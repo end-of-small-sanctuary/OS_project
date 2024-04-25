@@ -35,9 +35,6 @@ public class PCB implements Comparable<PCB> {
            
     }
      public String toString() {
-	    	  turnaroundTime = terminationTime-arrivalTime;
-	          waitingTime = turnaroundTime - cpuBurst;
-	    	  responseTime = startTime-arrivalTime;
 	    	 
 	    	 return "PCB:[" + "Process ID: "+ processID+ " | Priority : "+ priority
 	    			 + " | Arrival Time : " + arrivalTime + " | CPU burst : " + cpuBurst
