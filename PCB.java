@@ -30,11 +30,9 @@ public class PCB implements Comparable<PCB> {
 
     @Override
     public int compareTo(PCB o){
-    
-    int value1 = this.getArrivalTime() - o.getArrivalTime();
-        if (value1 == 0) 
+         
             return this.cpuBurst - o.cpuBurst;
-           return value1;
+           
     }
     }
 
