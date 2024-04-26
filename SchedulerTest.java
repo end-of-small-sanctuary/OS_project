@@ -150,13 +150,13 @@ public class SchedulerTest {
 	                                Q1[j].waitingTime -= Q1[j].turnaroundTime;
 	                                totalWaitingTime += Q1[j].waitingTime;
 	                                totalResponseTime += Q1[j].responseTime;
-	                                processData.append(Q1[j].toString()).append("\n").append(timer);
+	                                processData.append(Q1[j].toString()).append("\n");
 	                                Q1[j] = null;
 	                            }
 	                            
 	                        }
 	                    }
-                      if(Q2[j] !=null && Q1[j-1].cpuBurst==0) 
+                      if(Q2[j] !=null && done!=false) 
                        if (Q2[j].arrivalTime <= currentTime) {
 	                        done = false;
 
