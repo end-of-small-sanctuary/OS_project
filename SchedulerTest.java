@@ -154,6 +154,7 @@ if(Q1[j].startTime == -1)
 
 	                        if (Q2[j].arrivalTime == 0) {
 	                            SJIndex = j;
+                               Arrays.sort(Q2);
 	                            break; //execute process with arrival time zero immediately
 	                        } else if (Q2[j].cpuBurst < SJBurst) {
 	                            SJIndex = j;
