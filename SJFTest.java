@@ -213,7 +213,7 @@ public class SJFTest {
 
 	//console output
 	System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
-	System.out.print("Process Data: " + processData.toString() + "\n");
+	System.out.print("Process Data: \n " + processData.toString() + "\n");
 	//file output
 	writer.write("Scheduling Order: " + schedulingOrder.toString() + "\n");
 	writer.close();
