@@ -3,6 +3,7 @@ public class PCB implements Comparable<PCB> {
     int priority;
     int arrivalTime=0;
     int cpuBurst;
+    int currentBurst;
     int startTime;
     int terminationTime;
     int turnaroundTime;
@@ -15,7 +16,8 @@ public class PCB implements Comparable<PCB> {
         this.priority = priority;
         this.arrivalTime = arrivalTime;
         this.cpuBurst = cpuBurst;
-        this.startTime = 0;
+        this.currentBurst=cpuBurst;
+        this.startTime =-1;
         this.terminationTime = 0;
         this.turnaroundTime = 0;
         this.waitingTime = 0;
@@ -35,7 +37,9 @@ public class PCB implements Comparable<PCB> {
            
     }
      public String toString() {
-	    	 
+	    	 this.turnaroundTime=(terminationTime-arrivalTime);
+          this.waitingTime=turnaroundTime-cpuBurst;
+          this.responseTime=startTime-arrivalTime;
 	    	 return "PCB:[" + "Process ID: "+ processID+ " | Priority : "+ priority
 	    			 + " | Arrival Time : " + arrivalTime + " | CPU burst : " + cpuBurst
 	    			 + " | Start Time : " + startTime + " | Termination Time : " + terminationTime
@@ -45,4 +49,3 @@ public class PCB implements Comparable<PCB> {
 	    	 
 	    }
     }
-
