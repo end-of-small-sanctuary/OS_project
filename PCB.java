@@ -1,4 +1,4 @@
-public class PCB implements Comparable<PCB> {
+public class PCB {
     String processID;
     int priority;
     int arrivalTime=0;
@@ -30,12 +30,6 @@ public class PCB implements Comparable<PCB> {
         return arrivalTime;
     }
 
-    @Override
-    public int compareTo(PCB o){
-         
-            return this.cpuBurst - o.cpuBurst;
-           
-    }
      public String toString() {
 	    	 this.turnaroundTime=(terminationTime-arrivalTime);
           this.waitingTime=turnaroundTime-cpuBurst;
