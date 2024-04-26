@@ -138,7 +138,7 @@ if(Q1[j].startTime == -1)
 	                            } else {
 	                                currentTime += Q1[j].currentBurst;
 	                                Q1[j].terminationTime = currentTime;
-	                                processData.append(Q1[j].toString()).append("\n").append(timer);
+	                                processData.append(Q1[j].toString()).append("\n");
                                    totalTurnaroundTime += Q1[j].turnaroundTime;
 	                                totalWaitingTime += Q1[j].waitingTime;
 	                                totalResponseTime += Q1[j].responseTime;
