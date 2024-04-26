@@ -1,9 +1,6 @@
-import java.io.PrintWriter;
+mport java.io.PrintWriter;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //both this and the previous draft skip over the second Queue when run, i've yet to try solving this issue
 //it will correctly run Q1 though
@@ -116,7 +113,7 @@ public class SchedulerTest {
 
 
 
-	            // Q1 algorithm
+	            //Q1 algorithm
 	            if (Q1 != null||Q2!=null) {
 
 
@@ -129,40 +126,35 @@ public class SchedulerTest {
 	                    if (Q1[j].cpuBurst > 0) {
 	                        done = false;
 	                        
-	                        if (Q1[j].arrivalTime <= currentTime) { // Process can execute
+	                        if (Q1[j].arrivalTime <= currentTime) { //process can execute
 
-
-	                            if (Q1[j].responseTime == 0)
-	                                Q1[j].responseTime = currentTime + Q1[j].arrivalTime;
-
-	                            Q1[j].waitingTime += currentTime - Q1[j].startTime;
+if(Q1[j].startTime == -1)
 	                            Q1[j].startTime = currentTime;
 	                            schedulingOrder.append(Q1[j].processID).append(" | ");
 
-	                            if (Q1[j].cpuBurst > QUANTUM) {
+	                            if (Q1[j].currentBurst > QUANTUM) {
 	                                currentTime += QUANTUM;
-	                                Q1[j].cpuBurst -= QUANTUM;
+	                                Q1[j].currentBurst -= QUANTUM;
 	                            } else {
-	                                currentTime += Q1[j].cpuBurst;
+	                                currentTime += Q1[j].currentBurst;
 	                                Q1[j].terminationTime = currentTime;
-	                                Q1[j].turnaroundTime = Q1[j].terminationTime - Q1[j].arrivalTime;
-	                                totalTurnaroundTime += Q1[j].turnaroundTime;
-	                                Q1[j].waitingTime -= Q1[j].turnaroundTime;
+	                                processData.append(Q1[j].toString()).append("\n").append(timer);
+                                   totalTurnaroundTime += Q1[j].turnaroundTime;
 	                                totalWaitingTime += Q1[j].waitingTime;
 	                                totalResponseTime += Q1[j].responseTime;
-	                                processData.append(Q1[j].toString()).append("\n");
 	                                Q1[j] = null;
 	                            }
 	                            
 	                        }
 	                    }
+                       //Q2 algorithm
                       if(Q2[j] !=null && done!=false) 
                        if (Q2[j].arrivalTime <= currentTime) {
 	                        done = false;
 
 	                        if (Q2[j].arrivalTime == 0) {
 	                            shortestJobIndex = j;
-	                            break; // Execute process with arrival time zero immediately
+	                            break; //execute process with arrival time zero immediately
 	                        } else if (Q2[j].cpuBurst < shortestJobBurst) {
 	                            shortestJobIndex = j;
 	                            shortestJobBurst = Q2[j].cpuBurst;}
@@ -178,77 +170,34 @@ public class SchedulerTest {
 	            }
 	      if (shortestJobIndex != -1) {
 	                    int index = shortestJobIndex;
-	                    if (Q2[index].responseTime == 0)
-	                        Q2[index].responseTime = currentTime - Q2[index].arrivalTime;
+	                    
 
 	                    Q2[index].startTime = currentTime;
 	                    schedulingOrder.append(Q2[index].processID).append(" | ");
 	                    currentTime += Q2[index].cpuBurst;
 	                    Q2[index].terminationTime = currentTime;
-	                    Q2[index].turnaroundTime = Q2[index].terminationTime - Q2[index].arrivalTime;
-	                    totalTurnaroundTime += Q2[index].turnaroundTime;
-	                    Q2[index].waitingTime = Q2[index].turnaroundTime - Q2[index].cpuBurst;
+	                    
+                       processData.append("\n").append(Q2[index].toString()).append("\n");
+                       totalTurnaroundTime += Q2[index].turnaroundTime;
 	                    totalWaitingTime += Q2[index].waitingTime;
 	                    totalResponseTime += Q2[index].responseTime;
-	                    processData.append("\n").append(Q2[index].toString()).append("\n");
 
-	                    Q2[index] = null; // Mark the process as completed
+	                    Q2[index] = null; //mark the process as completed
                      }
                        }} while (!done);
 
 	 
-	//Q2 algorithm
-	       /* if (Q2 != null) {
-	            do {
-	                done = true;
-	                int shortestJobIndex = -1;
-	                int shortestJobBurst = Integer.MAX_VALUE;
 
-	                for (int l = 0; l < totalProcesses; l++) {
-	                    timer++;
-	                    if (Q2[l] == null)
-	                        continue;
-
-	                    if (Q2[l].arrivalTime <= currentTime) {
-	                        done = false;
-
-	                        if (Q2[l].arrivalTime == 0) {
-	                            shortestJobIndex = l;
-	                            break; // Execute process with arrival time zero immediately
-	                        } else if (Q2[l].cpuBurst < shortestJobBurst) {
-	                            shortestJobIndex = l;
-	                            shortestJobBurst = Q2[l].cpuBurst;
-	                        }
-	                    }
-	                }
-
-	                if (shortestJobIndex != -1) {
-	                    int index = shortestJobIndex;
-	                    if (Q2[index].responseTime == 0)
-	                        Q2[index].responseTime = currentTime - Q2[index].arrivalTime;
-
-	                    Q2[index].startTime = currentTime;
-	                    schedulingOrder.append(Q2[index].processID).append(" | ");
-	                    currentTime += Q2[index].cpuBurst;
-	                    Q2[index].terminationTime = currentTime;
-	                    Q2[index].turnaroundTime = Q2[index].terminationTime - Q2[index].arrivalTime;
-	                    totalTurnaroundTime += Q2[index].turnaroundTime;
-	                    Q2[index].waitingTime = Q2[index].turnaroundTime - Q2[index].cpuBurst;
-	                    totalWaitingTime += Q2[index].waitingTime;
-	                    totalResponseTime += Q2[index].responseTime;
-	                    processData.append("\n").append(Q2[index].toString()).append("\n");
-
-	                    Q2[index] = null; // Mark the process as completed
-	                }
-	            } while (!done); */
-	        
 
 
 	//console output
 	System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
-	System.out.print("Process Data: " + processData.toString() + "\n");
+	System.out.print("Process Data: " + processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
+   + "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses));
 	//file output
 	writer.write("Scheduling Order: " + schedulingOrder.toString() + "\n");
+   writer.write("Process Data: " + processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
+   + "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses) );
 	writer.close();
 
 
