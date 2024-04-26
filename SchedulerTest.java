@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.*;
+import java.text.DecimalFormat;
 
 //both this and the previous draft skip over the second Queue when run, i've yet to try solving this issue
 //it will correctly run Q1 though
@@ -193,15 +194,32 @@ if(Q1[j].startTime == -1)
 
 
 
-	//console output
-	System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
-	System.out.print("Process Data: " +"\n"+ processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
-+ "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses));
-	//file output
-	writer.write("Scheduling Order: " + schedulingOrder.toString() + "\n");
-writer.write("Process Data: " + processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
-+ "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses) );
-	writer.close();
+	// Define your DecimalFormat instance for two decimal places
+DecimalFormat df = new DecimalFormat("#.00");
+
+// Calculate averages
+double avgTurnaround = (double) totalTurnaroundTime / totalProcesses;
+double avgResponse = (double) totalResponseTime / totalProcesses;
+double avgWaiting = (double) totalWaitingTime / totalProcesses;
+
+// Format numbers using DecimalFormat
+String formattedAvgTurnaround = df.format(avgTurnaround);
+String formattedAvgResponse = df.format(avgResponse);
+String formattedAvgWaiting = df.format(avgWaiting);
+
+// Output with formatted numbers
+System.out.print("Process Data: \n" + processData.toString() + 
+    "\n Average Turnaround Time: " + formattedAvgTurnaround +
+    "\n Average Response Time: " + formattedAvgResponse +
+    "\n Average Waiting Time: " + formattedAvgWaiting);
+
+// Write to file with formatted numbers
+writer.write("Scheduling Order: " + schedulingOrder.toString() + "\n");
+writer.write("Process Data: \n" + processData.toString() +
+    "\n Average Turnaround Time: " + formattedAvgTurnaround +
+    "\n Average Response Time: " + formattedAvgResponse +
+    "\n Average Waiting Time: " + formattedAvgWaiting);
+
 
 
 
