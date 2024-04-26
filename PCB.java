@@ -29,6 +29,13 @@ public class PCB {
     public int getArrivalTime(){
         return arrivalTime;
     }
+	 @Override
+    public int compareTo(PCB o){
+         
+            return this.cpuBurst - o.cpuBurst;
+           
+    }
+
 
      public String toString() {
 	    	 this.turnaroundTime=(terminationTime-arrivalTime);
