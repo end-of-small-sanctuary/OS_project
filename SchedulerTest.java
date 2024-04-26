@@ -17,7 +17,7 @@ Java Guides, https://www.javaguides.net/2020/04/java-sort-array-objects-using-co
 
 public class SchedulerTest {
 //initialization
-  private static final int QUANTUM = 3; 
+ private static final int QUANTUM = 3; 
 	    private static int processIndex=0;
 	    private static PCB[] Q1; 
 	    public static PCB[] Q2;
@@ -108,8 +108,8 @@ public class SchedulerTest {
 
 	        do {
 	            done = true;
-	                int shortestJobIndex = -1;
-	                int shortestJobBurst = Integer.MAX_VALUE;
+	                int SJIndex = -1;
+	                int SJBurst = Integer.MAX_VALUE;
 
 
 
@@ -122,7 +122,7 @@ public class SchedulerTest {
 	                    
 	                    if (Q1[j] == null&&Q2[j]==null)
 	                        continue;
-                        if(Q1[j] !=null) 
+                     if(Q1[j] !=null) 
 	                    if (Q1[j].cpuBurst > 0) {
 	                        done = false;
 	                        
@@ -139,7 +139,7 @@ if(Q1[j].startTime == -1)
 	                                currentTime += Q1[j].currentBurst;
 	                                Q1[j].terminationTime = currentTime;
 	                                processData.append(Q1[j].toString()).append("\n");
-                                   totalTurnaroundTime += Q1[j].turnaroundTime;
+                                totalTurnaroundTime += Q1[j].turnaroundTime;
 	                                totalWaitingTime += Q1[j].waitingTime;
 	                                totalResponseTime += Q1[j].responseTime;
 	                                Q1[j] = null;
@@ -147,20 +147,20 @@ if(Q1[j].startTime == -1)
 	                            
 	                        }
 	                    }
-                       //Q2 algorithm
-                      if(Q2[j] !=null && done!=false) 
-                       if (Q2[j].arrivalTime <= currentTime) {
+                    //Q2 algorithm
+                   if(Q2[j] !=null && done!=false) 
+                    if (Q2[j].arrivalTime <= currentTime) {
 	                        done = false;
 
 	                        if (Q2[j].arrivalTime == 0) {
-	                            shortestJobIndex = j;
+	                            SJIndex = j;
 	                            break; //execute process with arrival time zero immediately
-	                        } else if (Q2[j].cpuBurst < shortestJobBurst) {
-	                            shortestJobIndex = j;
-	                            shortestJobBurst = Q2[j].cpuBurst;}
+	                        } else if (Q2[j].cpuBurst < SJBurst) {
+	                            SJIndex = j;
+	                            SJBurst = Q2[j].cpuBurst;}
 
 
-                            else {
+                         else {
 	                        
 	                        continue;
 	                    }
@@ -168,8 +168,8 @@ if(Q1[j].startTime == -1)
 
 	                
 	            }
-	      if (shortestJobIndex != -1) {
-	                    int index = shortestJobIndex;
+	      if (SJIndex != -1) {
+	                    int index = SJIndex;
 	                    
 
 	                    Q2[index].startTime = currentTime;
@@ -177,27 +177,29 @@ if(Q1[j].startTime == -1)
 	                    currentTime += Q2[index].cpuBurst;
 	                    Q2[index].terminationTime = currentTime;
 	                    
-                       processData.append("\n").append(Q2[index].toString()).append("\n");
-                       totalTurnaroundTime += Q2[index].turnaroundTime;
+                    processData.append("\n").append(Q2[index].toString()).append("\n");
+                    totalTurnaroundTime += Q2[index].turnaroundTime;
 	                    totalWaitingTime += Q2[index].waitingTime;
 	                    totalResponseTime += Q2[index].responseTime;
 
 	                    Q2[index] = null; //mark the process as completed
-                     }
-                       }} while (!done);
+                  }
+                    }} while (!done);
 
+	        
+	        
 	 
 
 
 
 	//console output
 	System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
-	System.out.print("Process Data: " + processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
-   + "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses));
+	System.out.print("Process Data: " +"\n"+ processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
++ "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses));
 	//file output
 	writer.write("Scheduling Order: " + schedulingOrder.toString() + "\n");
-   writer.write("Process Data: " + processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
-   + "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses) );
+writer.write("Process Data: " + processData.toString() + "\n Average TurnaroundTime: "+ (totalTurnaroundTime/totalProcesses)
++ "\n Average ResponseTime: "+ (totalResponseTime/totalProcesses)+ "\n Average WaitingTime : "+ (totalWaitingTime/totalProcesses) );
 	writer.close();
 
 
