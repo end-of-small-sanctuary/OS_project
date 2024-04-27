@@ -142,7 +142,7 @@ public class SJFTest {
 						}
 		
 						// Process Q2 based on SJF scheduling
-						if (Q2[j] != null && Q2[j].cpuBurst > 0 && Q2[j].arrivalTime <= currentTime) {
+						if (Q2[j] != null && Q2[j].cpuBurst > 0 && Q2[j].arrivalTime <= currentTime && done!=false)) {
 							done = false;
 							if (Q2[j].cpuBurst < SJBurst) {
 								SJIndex = j;
