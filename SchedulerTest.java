@@ -190,12 +190,8 @@ if(Q1[j].startTime == -1)
 
 	        
 	        
-	 
-
-
-
-	// Define your DecimalFormat instance for two decimal places
-DecimalFormat df = new DecimalFormat("#.00");
+					System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
+					DecimalFormat df = new DecimalFormat("#.00");
 
 // Calculate averages
 double avgTurnaround = (double) totalTurnaroundTime / totalProcesses;
@@ -220,8 +216,8 @@ writer.write("Process Data: \n" + processData.toString() +
     "\n Average Response Time: " + formattedAvgResponse +
     "\n Average Waiting Time: " + formattedAvgWaiting);
 
-
-
+	
+	writer.close();
 
 	  
 
