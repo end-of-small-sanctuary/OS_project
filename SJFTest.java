@@ -86,148 +86,100 @@ public class SJFTest {
 	    }
 
 
-	    //report detailed process method
-	        private static void reportDetailedInfo(PCB[]Q1, PCB[] Q2,int totalProcesses) {
-	        try {
-	        PrintWriter writer = new PrintWriter("Report.txt");
-
-	        
-	        StringBuilder schedulingOrder = new StringBuilder();
-	        StringBuilder processData = new StringBuilder();
-           
-	        int currentTime = 0;
-	        int totalTurnaroundTime = 0;
-	        int totalWaitingTime = 0;
-	        int totalResponseTime = 0;
-	        boolean done = true;
-	        
-	        
-	         
-	//start of algorithm method
-	        do {
-    done = true;
-    int SJIndex = -1;
-    int SJBurst = Integer.MAX_VALUE;
-
-    // Handle initial start time when all processes have a non-zero arrival time
-    if (currentTime == 0) {
-        int earliestArrival = Integer.MAX_VALUE;
-        for (PCB pcb : Q1) {
-            if (pcb != null && pcb.arrivalTime < earliestArrival) {
-                earliestArrival = pcb.arrivalTime;
-            }
-        }
-        for (PCB pcb : Q2) {
-            if (pcb != null && pcb.arrivalTime < earliestArrival) {
-                earliestArrival = pcb.arrivalTime;
-            }
-        }
-        currentTime = earliestArrival;
-    }	            //Q1 algorithm
-	            if (Q1 != null||Q2!=null) {
-
-
-	                for (int j = 0; j < totalProcesses; j++) {
-	                    
-	                    
-	                    if (Q1[j] == null&&Q2[j]==null)
-	                        continue;
-                     if(Q1[j] !=null) 
-	                    if (Q1[j].cpuBurst > 0) {
-	                        done = false;
-	                        
-	                        if (Q1[j].arrivalTime <= currentTime) { //process can execute
-
-                               if(Q1[j].startTime == -1)//never processed
-	                            Q1[j].startTime = currentTime;
-	                            schedulingOrder.append(Q1[j].processID).append(" | ");
-
-	                            if (Q1[j].currentBurst > QUANTUM) {//recurring processes
-	                                currentTime += QUANTUM;
-	                                Q1[j].currentBurst -= QUANTUM;
-	                            } 
-                               else { //last recursion
-	                                currentTime += Q1[j].currentBurst;
-	                                Q1[j].terminationTime = currentTime;
-                                   
-	                                processData.append(Q1[j].toString()).append("\n");
-                                   totalTurnaroundTime += Q1[j].turnaroundTime;
-	                                totalWaitingTime += Q1[j].waitingTime;
-	                                totalResponseTime += Q1[j].responseTime;
-	                                Q1[j] = null;
-	                            }
-	                            
-	                        }
-	                    }
-                       
-                       
-                    //Q2 algorithm
-                   if(Q2[j] !=null && done != false) 
-                    if (Q2[j].arrivalTime <= currentTime) {//process can execute
-	                        done = false;
-	                        if (Q2[j].arrivalTime == 0) {
-	                            SJIndex = j;
-	                            break; //execute process with arrival time zero immediately
-	                        } else 
-                              if (Q2[j].cpuBurst < SJBurst) {
-	                            SJIndex = j;
-	                            SJBurst = Q2[j].cpuBurst;
-                               } 
-	                }
-
-	                
-	            }//end of for loop
-               
-	      if (SJIndex != -1) {
-	                    int index = SJIndex;
-	                    
-
-	                    Q2[index].startTime = currentTime;
-	                    schedulingOrder.append(Q2[index].processID).append(" | ");
-	                    currentTime += Q2[index].cpuBurst;
-	                    Q2[index].terminationTime = currentTime;
-	                    
-                       processData.append("\n").append(Q2[index].toString()).append("\n");
-                       totalTurnaroundTime += Q2[index].turnaroundTime;
-	                    totalWaitingTime += Q2[index].waitingTime;
-	                    totalResponseTime += Q2[index].responseTime;
-
-	                    Q2[index] = null; //mark the process as completed
-                  }
-                    }} while (!done);
-
-	        
-	        
-					System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
-					DecimalFormat df = new DecimalFormat("#0.00");
-
-//calculate averages
-double avgTurnaround = (double) totalTurnaroundTime / totalProcesses;
-double avgResponse = (double) totalResponseTime / totalProcesses;
-double avgWaiting = (double) totalWaitingTime / totalProcesses;
-
-
-
-//output to console
-System.out.print("Process Data: \n" + processData.toString() + 
-    "\n Average Turnaround Time: " + df.format(avgTurnaround) +
-    "\n Average Response Time: " + df.format(avgResponse) +
-    "\n Average Waiting Time: " + df.format(avgWaiting));
-
-//write to file
-writer.write("Scheduling Order: " + schedulingOrder.toString() + "\n");
-writer.write("Process Data: \n" + processData.toString() +
-    "\n Average Turnaround Time: " + df.format(avgTurnaround) +
-    "\n Average Response Time: " + df.format(avgResponse) +
-    "\n Average Waiting Time: " + df.format(avgWaiting));
-
-	
-	writer.close();
-
-	  
-
-	  }catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
+	    private static void reportDetailedInfo(PCB[] Q1, PCB[] Q2, int totalProcesses) {
+			try {
+				PrintWriter writer = new PrintWriter("Report.txt");
+		
+				StringBuilder schedulingOrder = new StringBuilder();
+				StringBuilder processData = new StringBuilder();
+		
+				int currentTime = 0;
+				int totalTurnaroundTime = 0;
+				int totalWaitingTime = 0;
+				int totalResponseTime = 0;
+				boolean done;
+		
+				// Initialize currentTime to the earliest arrival time if no processes start at zero
+				if (currentTime == 0) {
+					int earliestArrival = Integer.MAX_VALUE;
+					for (PCB pcb : Q1) {
+						if (pcb != null && pcb.arrivalTime < earliestArrival) {
+							earliestArrival = pcb.arrivalTime;
+						}
+					}
+					for (PCB pcb : Q2) {
+						if (pcb != null && pcb.arrivalTime < earliestArrival) {
+							earliestArrival = pcb.arrivalTime;
+						}
+					}
+					currentTime = earliestArrival;
+				}
+		
+				do {
+					done = true;
+					int SJIndex = -1;
+					int SJBurst = Integer.MAX_VALUE;
+		
+					for (int j = 0; j < totalProcesses; j++) {
+						// Process Q1 based on Round Robin scheduling
+						if (Q1[j] != null && Q1[j].cpuBurst > 0 && Q1[j].arrivalTime <= currentTime) {
+							done = false;
+							if (Q1[j].startTime == -1) Q1[j].startTime = currentTime; // Set start time for unprocessed process
+							schedulingOrder.append(Q1[j].processID).append(" | ");
+		
+							int executionTime = Math.min(Q1[j].currentBurst, QUANTUM);
+							currentTime += executionTime;
+							Q1[j].currentBurst -= executionTime;
+		
+							if (Q1[j].currentBurst == 0) {
+								Q1[j].terminationTime = currentTime;
+								processData.append(Q1[j].toString()).append("\n");
+								totalTurnaroundTime += Q1[j].turnaroundTime;
+								totalWaitingTime += Q1[j].waitingTime;
+								totalResponseTime += Q1[j].responseTime;
+								Q1[j] = null;  // Process is completed
+							}
+						}
+		
+						// Process Q2 based on SJF scheduling
+						if (Q2[j] != null && Q2[j].cpuBurst > 0 && Q2[j].arrivalTime <= currentTime) {
+							done = false;
+							if (Q2[j].cpuBurst < SJBurst) {
+								SJIndex = j;
+								SJBurst = Q2[j].cpuBurst;
+							}
+						}
+					}
+		
+					if (SJIndex != -1) {
+						Q2[SJIndex].startTime = currentTime;
+						schedulingOrder.append(Q2[SJIndex].processID).append(" | ");
+						currentTime += Q2[SJIndex].cpuBurst;
+						Q2[SJIndex].terminationTime = currentTime;
+						processData.append(Q2[SJIndex].toString()).append("\n");
+						totalTurnaroundTime += Q2[SJIndex].turnaroundTime;
+						totalWaitingTime += Q2[SJIndex].waitingTime;
+						totalResponseTime += Q2[SJIndex].responseTime;
+						Q2[SJIndex] = null;  // Process is completed
+					}
+				} while (!done);
+		
+				DecimalFormat df = new DecimalFormat("#0.00");
+		
+				System.out.println("Scheduling Order: " + schedulingOrder);
+				System.out.println("Process Data: " + processData);
+				System.out.println("Average Turnaround Time: " + df.format((double) totalTurnaroundTime / totalProcesses));
+				System.out.println("Average Waiting Time: " + df.format((double) totalWaitingTime / totalProcesses));
+				System.out.println("Average Response Time: " + df.format((double) totalResponseTime / totalProcesses));
+		
+				writer.println("Scheduling Order: " + schedulingOrder);
+				writer.println("Process Data: " + processData);
+				writer.printf("Average Turnaround Time: %s\n", df.format((double) totalTurnaroundTime / totalProcesses));
+				writer.printf("Average Waiting Time: %s\n", df.format((double) totalWaitingTime / totalProcesses));
+				writer.printf("Average Response Time: %s\n", df.format((double) totalResponseTime / totalProcesses));
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
