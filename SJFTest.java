@@ -167,7 +167,7 @@ public class SJFTest {
 				DecimalFormat df = new DecimalFormat("#0.00");
 		
 				System.out.println("Scheduling Order: " + schedulingOrder);
-				System.out.println("Process Data: " + processData);
+				System.out.println("Process Data: "+"\n" + processData);
 				System.out.println("Average Turnaround Time: " + df.format((double) totalTurnaroundTime / totalProcesses));
 				System.out.println("Average Waiting Time: " + df.format((double) totalWaitingTime / totalProcesses));
 				System.out.println("Average Response Time: " + df.format((double) totalResponseTime / totalProcesses));
