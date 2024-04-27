@@ -3,8 +3,6 @@ import java.io.IOException;
 import java.util.*;
 import java.text.DecimalFormat;
 
-//both this and the previous draft skip over the second Queue when run, i've yet to try solving this issue
-//it will correctly run Q1 though
 
 /*
 Refrences used:
@@ -99,7 +97,7 @@ public class SJFTest {
 				int totalResponseTime = 0;
 				boolean done;
 		
-				// Initialize currentTime to the earliest arrival time if no processes start at zero
+				//initialize currentTime to the earliest arrival time if no processes start at zero
 				if (currentTime == 0) {
 					int earliestArrival = Integer.MAX_VALUE;
 					for (PCB pcb : Q1) {
@@ -121,10 +119,10 @@ public class SJFTest {
 					int SJBurst = Integer.MAX_VALUE;
 		
 					for (int j = 0; j < totalProcesses; j++) {
-						// Process Q1 based on Round Robin scheduling
+						//Q1 algorithim
 						if (Q1[j] != null && Q1[j].cpuBurst > 0 && Q1[j].arrivalTime <= currentTime) {
 							done = false;
-							if (Q1[j].startTime == -1) Q1[j].startTime = currentTime; // Set start time for unprocessed process
+							if (Q1[j].startTime == -1) Q1[j].startTime = currentTime; //set start time for unprocessed process
 							schedulingOrder.append(Q1[j].processID).append(" | ");
 		
 							int executionTime = Math.min(Q1[j].currentBurst, QUANTUM);
@@ -137,12 +135,12 @@ public class SJFTest {
 								totalTurnaroundTime += Q1[j].turnaroundTime;
 								totalWaitingTime += Q1[j].waitingTime;
 								totalResponseTime += Q1[j].responseTime;
-								Q1[j] = null;  // Process is completed
+								Q1[j] = null;  //process is completed
 							}
 						}
 		
-						// Process Q2 based on SJF scheduling
-						if (Q2[j] != null && Q2[j].cpuBurst > 0 && Q2[j].arrivalTime <= currentTime && done!=false)) {
+						//Q2 algorithim
+						if (Q2[j] != null && Q2[j].cpuBurst > 0 && Q2[j].arrivalTime <= currentTime && done!=false) {
 							done = false;
 							if (Q2[j].cpuBurst < SJBurst) {
 								SJIndex = j;
@@ -160,12 +158,12 @@ public class SJFTest {
 						totalTurnaroundTime += Q2[SJIndex].turnaroundTime;
 						totalWaitingTime += Q2[SJIndex].waitingTime;
 						totalResponseTime += Q2[SJIndex].responseTime;
-						Q2[SJIndex] = null;  // Process is completed
+						Q2[SJIndex] = null;  //process is completed
 					}
 				} while (!done);
 		
 				DecimalFormat df = new DecimalFormat("#0.00");
-		
+		//output formatting
 				System.out.println("Scheduling Order: " + schedulingOrder);
 				System.out.println("Process Data: "+"\n" + processData);
 				System.out.println("Average Turnaround Time: " + df.format((double) totalTurnaroundTime / totalProcesses));
