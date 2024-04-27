@@ -96,8 +96,6 @@ public class SchedulerTest {
 	        StringBuilder processData = new StringBuilder();
            
 	        int currentTime = 0;
-           int SJIndex = -1;
-	        int SJBurst = Integer.MAX_VALUE;
 	        int totalTurnaroundTime = 0;
 	        int totalWaitingTime = 0;
 	        int totalResponseTime = 0;
@@ -108,6 +106,8 @@ public class SchedulerTest {
 	//start of algorithm method
 	        do {
 	                done = true;
+			int SJIndex = -1;
+	        	int SJBurst = Integer.MAX_VALUE;
 
 
 
