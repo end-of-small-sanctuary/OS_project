@@ -191,7 +191,7 @@ if(Q1[j].startTime == -1)
 	        
 	        
 					System.out.print("Scheduling Order: " + schedulingOrder.toString() + "\n");
-					DecimalFormat df = new DecimalFormat("#.00");
+					DecimalFormat df = new DecimalFormat("#0.00");
 
 // Calculate averages
 double avgTurnaround = (double) totalTurnaroundTime / totalProcesses;
